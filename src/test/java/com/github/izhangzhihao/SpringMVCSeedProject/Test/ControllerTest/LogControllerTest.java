@@ -2,9 +2,12 @@ package com.github.izhangzhihao.SpringMVCSeedProject.Test.ControllerTest;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.izhangzhihao.SpringMVCSeedProject.Controller.LogController;
 import com.github.izhangzhihao.SpringMVCSeedProject.Test.TestUtils.BaseTest;
-import com.github.izhangzhihao.SpringMVCSeedProject.Utils.PageResults;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Map;
 
@@ -15,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class LogControllerTest extends BaseTest {
-   /*@Autowired
+    @Autowired
     private LogController logController;
 
     @Before
@@ -24,7 +27,7 @@ public class LogControllerTest extends BaseTest {
                 .standaloneSetup(logController)
                 .setViewResolvers(viewResolver)
                 .build();
-    }*/
+    }
 
 
     /**
@@ -68,11 +71,6 @@ public class LogControllerTest extends BaseTest {
      */
     @Test
     public void getLogByPageTest() throws Exception {
-        //自动将json转为实体，避免了手动转换，缺点是不可以测试http status
-        /*PageResults pageResults = restTemplate
-                .getForObject("/Log/getLogByPage/pageNumber/" + 2 + "/pageSize/" + 10,
-                        PageResults.class);*/
-
         String contentAsString = mockMvc
                 .perform(
                         get("/Log/LogByPage/pageNumber/" + 2 + "/pageSize/" + 10)
@@ -83,12 +81,9 @@ public class LogControllerTest extends BaseTest {
                 .getResponse()
                 .getContentAsString();
         System.out.println(contentAsString);
-        //手动将string转为json
+        //将string转为json
         ObjectMapper objectMapper = new ObjectMapper();
-        PageResults pageResults = objectMapper.readValue(contentAsString, PageResults.class);
-
-
-        /*Map map = objectMapper.readValue(contentAsString, Map.class);
+        Map map = objectMapper.readValue(contentAsString, Map.class);
         System.out.println(map);
         int previousPage = Integer.parseInt(map.get("previousPage").toString());
         int currentPage = Integer.parseInt(map.get("currentPage").toString());
@@ -96,25 +91,6 @@ public class LogControllerTest extends BaseTest {
         int pageSize = Integer.parseInt(map.get("pageSize").toString());
         int totalCount = Integer.parseInt(map.get("totalCount").toString());
         int pageCount = Integer.parseInt(map.get("pageCount").toString());
-        assertTrue(previousPage <= currentPage);
-        assertTrue(currentPage <= nextPage);
-        assertTrue(pageSize * pageCount >= totalCount);
-
-        int i = totalCount % pageSize;
-        if (i == 0) {
-            assertEquals(totalCount / pageSize, pageCount);
-        } else {
-            assertEquals(totalCount / pageSize + 1, pageCount);
-        }*/
-
-
-        int previousPage = pageResults.getPreviousPage();
-        int currentPage = pageResults.getCurrentPage();
-        int nextPage = pageResults.getNextPage();
-        int pageSize = pageResults.getPageSize();
-        int totalCount = pageResults.getTotalCount();
-        int pageCount = pageResults.getPageCount();
-
         assertTrue(previousPage <= currentPage);
         assertTrue(currentPage <= nextPage);
         assertTrue(pageSize * pageCount >= totalCount);

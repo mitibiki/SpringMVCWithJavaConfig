@@ -1,45 +1,18 @@
 group "com.github.izhangzhihao"
 version "1.0-SNAPSHOT"
 
-buildscript {
-    repositories {
-        mavenLocal()
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-        jcenter()
-        mavenCentral()
-        maven { url "http://repo.spring.io/release" }
-        maven { url "https://repo.spring.io/libs-snapshot" }
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
-    }
-}
-
-
 apply plugin: "java"
 apply plugin: "war"
-apply plugin: "spring-boot"
 apply plugin: "jacoco"
 apply plugin: "idea"
 
-war {
-    baseName = "SpringMVCSeedProject"
-    version = "1.0"
-}
-
-springBoot {
-    executable = true
-}
-
-configurations {
-    providedRuntime
-}
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-def SpringBootVersion = "1.4.1.RELEASE"
-def HibernateVersion = "5.2.3.Final"
+def SpringVersion = "4.3.4.RELEASE"
+def HibernateVersion = "5.2.4.Final"
 def ShiroVersion = "1.3.2"
+def JacksonVersion = "2.8.4"
+
 
 repositories {
     mavenLocal()
@@ -52,18 +25,19 @@ repositories {
 
 dependencies {
     compile(
-            "org.springframework.boot:spring-boot-starter-web:${SpringBootVersion}",
-            //"org.springframework.boot:spring-boot-starter-thymeleaf:${SpringBootVersion}",
-            "org.springframework.boot:spring-boot-starter-data-jpa:${SpringBootVersion}",
-            "org.springframework.boot:spring-boot-starter-test:${SpringBootVersion}",
-            "org.springframework.boot:spring-boot-devtools:${SpringBootVersion}",
-
-            //支持jsp
-            "org.apache.tomcat.embed:tomcat-embed-jasper:8.5.4",
-
-            //springfox
-            "io.springfox:springfox-swagger2:2.6.0",
-            "io.springfox:springfox-swagger-ui:2.6.0",
+            // spring framework
+            "org.springframework:spring-context:${SpringVersion}",
+            "org.springframework:spring-context-support:${SpringVersion}",//启用ehcache缓存
+            "org.springframework:spring-web:${SpringVersion}",
+            "org.springframework:spring-webmvc:${SpringVersion}",
+            "org.springframework:spring-test:${SpringVersion}",
+            "org.springframework:spring-beans:${SpringVersion}",
+            "org.springframework:spring-expression:${SpringVersion}",
+            "org.springframework:spring-aop:${SpringVersion}",
+            "org.springframework:spring-aspects:${SpringVersion}",
+            "org.springframework:spring-core:${SpringVersion}",
+            "org.springframework:spring-instrument:${SpringVersion}",
+            "org.springframework:spring-orm:${SpringVersion}",
 
             //Spring-Session
             "org.springframework.session:spring-session:1.2.2.RELEASE",
@@ -73,29 +47,58 @@ dependencies {
             "redis.clients:jedis:2.9.0",
             "org.apache.commons:commons-pool2:2.4.2",
 
-            //监控
-            "org.springframework.boot:spring-boot-starter-actuator:${SpringBootVersion}",
-            //"de.codecentric:spring-boot-admin-starter-client:1.4.1",
-            //"org.jolokia:jolokia-core:1.3.4",
+            //springfox
+            "io.springfox:springfox-swagger2:2.6.0",
+            "io.springfox:springfox-swagger-ui:2.6.0",
+
+            // MySQL
+            "mysql:mysql-connector-java:6.0.4",
+
+            //servlet
+            //"javax.servlet:javax.servlet-api:3.1.0",
+
+            //el
+            //"javax.el:javax.el-api:3.0.1-b04",
+
+            //jstl
+            //"javax.servlet:jstl:1.2",
 
             //apache
             "commons-fileupload:commons-fileupload:1.3.2",
             "org.apache.commons:commons-lang3:3.4",//深拷贝
 
-            // MySQL
-            "mysql:mysql-connector-java:6.0.4",
+            // JSON
+            "com.fasterxml.jackson.core:jackson-core:${JacksonVersion}",
+            "com.fasterxml.jackson.core:jackson-databind:${JacksonVersion}",
+            "com.fasterxml.jackson.core:jackson-annotations:${JacksonVersion}",
 
             //Hibernate
             "org.hibernate:hibernate-core:${HibernateVersion}",
             "org.hibernate:hibernate-validator:5.3.0.Final",
 
-            //ehcache
-            "org.ehcache:ehcache:3.1.2",
-            "org.hibernate:hibernate-ehcache:${HibernateVersion}",
-
             //C3P0
             "com.mchange:c3p0:0.9.5.2",
             "org.hibernate:hibernate-c3p0:${HibernateVersion}",
+
+            //ehcache
+            "org.ehcache:ehcache:3.1.3",
+            "org.hibernate:hibernate-ehcache:${HibernateVersion}",
+
+            //jUnit
+            "junit:junit:4.12",
+
+            //Mockito
+            //"org.mockito:mockito-core:2.0.99-beta",
+
+            //@NotNull
+            "org.jetbrains:annotations:15.0",
+
+            //slf4j
+            //"org.slf4j:slf4j-log4j12:1.7.21",
+            //"org.slf4j:slf4j-jdk14:1.7.21",
+            "org.slf4j:jcl-over-slf4j:1.7.21",//jcl-over-slf4j 把 Commons-Logging 桥接到 Slf4J，然后 Logback。
+            "ch.qos.logback:logback-core:1.1.7",
+            "ch.qos.logback:logback-classic:1.1.7",
 
             //shiro
             "org.apache.shiro:shiro-core:${ShiroVersion}",
@@ -103,18 +106,24 @@ dependencies {
             "org.apache.shiro:shiro-web:${ShiroVersion}",
             "org.apache.shiro:shiro-ehcache:${ShiroVersion}",
 
+            //Groovy
+            "org.codehaus.groovy:groovy:2.4.7",
+
             //Lombok
             "org.projectlombok:lombok:1.16.10",
 
-            //@NotNull
-            "org.jetbrains:annotations:15.0",
+            //Jetty
+            "org.eclipse.jetty:jetty-webapp:9.3.10.v20160621",
+            "org.eclipse.jetty.http2:http2-server:9.3.10.v20160621",
+            "org.eclipse.jetty:jetty-jsp:9.2.17.v20160517",
 
-            //Groovy
-            "org.codehaus.groovy:groovy:2.4.7",
     )
     testCompile(
             //jUnit
             "junit:junit:4.12",
+
+            //Mockito
+            "org.mockito:mockito-core:2.2.1",
     )
 }
 
@@ -130,18 +139,38 @@ tasks.withType(JavaCompile) {
 
 test {
     useJUnit()
-    // listen to events in the test execution lifecycle
-    beforeTest { descriptor ->
-        logger.lifecycle("Running test: " + descriptor)
-    }
-
-    // listen to standard out and standard error of the test JVM(s)
-    onOutput { descriptor, event ->
-        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
-    }
-
     jacoco {
         destinationFile = file("$buildDir/jacoco/test.exec")
+    }
+}
+
+tasks.withType(Test) {
+    testLogging {
+        // set options for log level LIFECYCLE
+        events "passed", "skipped", "failed", "standardOut"
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+
+        // set options for log level DEBUG and INFO
+        debug {
+            events "started", "passed", "skipped", "failed", "standardOut", "standardError"
+            exceptionFormat "full"
+        }
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "结果: ${result.resultType} (${result.testCount} 个测试, ${result.successfulTestCount} 个成功, ${result.failedTestCount} 个失败, ${result.skippedTestCount} 个跳过)"
+                //def startItem = '|  ', endItem = '  |'
+                //def repeatLength = startItem.length() + output.length() + endItem.length()
+                //println('\n' + ('——' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('——' * repeatLength))
+                def repeatLength = output.length()
+                println('\n' + ('——' * repeatLength) + '\n' + output + '\n' + ('——' * repeatLength))
+            }
+        }
     }
 }
 

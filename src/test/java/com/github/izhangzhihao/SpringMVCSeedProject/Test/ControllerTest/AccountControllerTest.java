@@ -1,25 +1,35 @@
 package com.github.izhangzhihao.SpringMVCSeedProject.Test.ControllerTest;
 
 
+import com.github.izhangzhihao.SpringMVCSeedProject.Controller.AccountController;
 import com.github.izhangzhihao.SpringMVCSeedProject.Test.TestUtils.BaseTest;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.mock.web.MockHttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.servlet.http.HttpSession;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
 public class AccountControllerTest extends BaseTest {
 
-    /*@Autowired
+    @Autowired
     private AccountController controller;
+
+    @Autowired
+    private DefaultWebSecurityManager securityManager;
 
     @Before
     public void setup() {
@@ -27,7 +37,8 @@ public class AccountControllerTest extends BaseTest {
                 .standaloneSetup(controller)
                 .setViewResolvers(viewResolver)
                 .build();
-    }*/
+    }
+
 
     /**
      * 登陆页面的测试
@@ -37,7 +48,7 @@ public class AccountControllerTest extends BaseTest {
         mockMvc.perform(get("/Account/Login"))
                 .andDo(print())
                 .andExpect(view().name("Account/Login"))
-                .andExpect(forwardedUrl("/WEB-INF/views/Account/Login.jsp"))
+                //.andExpect(forwardedUrl("Account/Login"))
                 .andExpect(status().isOk());
     }
 
@@ -81,6 +92,7 @@ public class AccountControllerTest extends BaseTest {
         assertFalse(result.getRequest().getSession().getAttributeNames().hasMoreElements());
 
     }
+
 
     /*
      * 登录失败测试

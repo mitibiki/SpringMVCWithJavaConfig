@@ -115,7 +115,7 @@ public class BaseRepositoryTest extends BaseTest {
      * 对save的单元测试
      */
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void saveNullTest() {
         userRepository.save(null);
     }
@@ -176,7 +176,7 @@ public class BaseRepositoryTest extends BaseTest {
      * 对delete的单元测试
      */
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void deleteNullTest() {
         userRepository.delete(null);
     }
@@ -235,7 +235,7 @@ public class BaseRepositoryTest extends BaseTest {
      * 对deleteById的单元测试
      */
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void deleteByNullIdTest() {
         userRepository.deleteById(User.class, null);
     }
@@ -264,7 +264,7 @@ public class BaseRepositoryTest extends BaseTest {
      * 对saveOrUpdate的单元测试
      */
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void saveOrUpdate_NullTest() {
         userRepository.saveOrUpdate(null);
     }
