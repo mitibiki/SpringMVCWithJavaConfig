@@ -3,7 +3,7 @@
 
 
 # 主要的后端架构：
-   SpringBoot + Spring + Spring MVC + JPA + Spring Data + Hibernate + Apache Shiro + Spring-Session 
+    Spring + Spring MVC + JPA + Spring Data + Hibernate + Apache Shiro + Spring-Session 
     
     
 # 架构图：
@@ -22,3 +22,8 @@
     导入前视情况修改maven仓库地址(build.gradle)和数据库地址(src/main/resources/db.properties)
     运行项目前请确保有一个Redis实例在运行，并且正确配置(src/main/resources/redis.properties)
 
+# 初始化数据库
+```sql
+INSERT INTO SpringMVCSeedProject.user (userName, passWord, role, authorityType) VALUES ('admin', '9cf3e758a497c6274bd066d0b2168432f8a34aad95f63a65677a9a56acec94a7', 'ADMIN', null);
+```
+然后就可以用账号admin密码admin登陆了
