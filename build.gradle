@@ -87,9 +87,6 @@ dependencies {
             //jUnit
             "junit:junit:4.12",
 
-            //Mockito
-            //"org.mockito:mockito-core:2.0.99-beta",
-
             //@NotNull
             "org.jetbrains:annotations:15.0",
 
@@ -111,12 +108,6 @@ dependencies {
 
             //Lombok
             "org.projectlombok:lombok:1.16.10",
-
-            //Jetty
-            "org.eclipse.jetty:jetty-webapp:9.3.10.v20160621",
-            "org.eclipse.jetty.http2:http2-server:9.3.10.v20160621",
-            "org.eclipse.jetty:jetty-jsp:9.2.17.v20160517",
-
     )
     testCompile(
             //jUnit
