@@ -55,7 +55,7 @@ dependencies {
             "mysql:mysql-connector-java:6.0.4",
 
             //servlet
-            //"javax.servlet:javax.servlet-api:3.1.0",
+            "javax.servlet:javax.servlet-api:3.1.0",
 
             //el
             //"javax.el:javax.el-api:3.0.1-b04",
